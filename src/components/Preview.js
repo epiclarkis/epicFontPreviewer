@@ -53,7 +53,7 @@ const Preview = ({ input, customFontClass }) => {
             <div className="output">
                 <div id="outputText" className={fontClass}>{input}</div>
                 <div className="toggler">
-                    <p>Toggle preview</p>
+                    <p>Preview font</p>
                     <div className="switch">
                         <label className="switch">
                             <input type="checkbox"  onChange={handleChecked} checked={checked} />
