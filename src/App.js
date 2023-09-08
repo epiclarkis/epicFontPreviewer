@@ -25,7 +25,6 @@ function App() {
       const reader = new FileReader()
 
       reader.onload = () => {
-
         try {
           const arrayBuffer = reader.result
           const font = opentype.parse(arrayBuffer)
@@ -33,15 +32,16 @@ function App() {
 
           setFontFile(arrayBuffer)
           setFontFileName(fontName)
-          applyFontToElement(arrayBuffer, fontFile, fontName)
+
+          applyFontToElement(arrayBuffer, fontName)
         } catch (error) {
           console.error(error)
-          setError(`${error.message}. Use Firefox browser.`)
+          setError('Cannot parse font file')
         }
       }
+
       reader.readAsArrayBuffer(file);
   }
-
 
   const applyFontToElement = (fontData, fontName) => {
 
