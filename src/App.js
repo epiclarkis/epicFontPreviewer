@@ -57,9 +57,23 @@ function App() {
     }
 
     // Encode font data as Base64
+
+    const arrayBuffer = new Uint8Array(fontData);
+    let base64FontData = '';
+    
+    // Process data in chunks to prevent RangeError
+    for (let i = 0; i < arrayBuffer.length; i += 1024) {
+      const chunk = arrayBuffer.slice(i, i + 1024);
+      base64FontData += String.fromCharCode.apply(null, chunk);
+    }
+    
+    base64FontData = btoa(base64FontData)
+    
+    /* Getting RangeError with this code so commenting this out
+    
     const base64FontData = btoa(
       String.fromCharCode.apply(null, new Uint8Array(fontData))
-    )
+    ) */
   
     if (!base64FontData) {
       console.error('Failed to encode font data in Base64.')
@@ -68,7 +82,7 @@ function App() {
 
     // Define the format string based on the provided font format
     let formatString = ''
-    
+
     if (fontFormat === 'otf') {
       formatString = 'opentype'
     } else if (fontFormat === 'ttf') {
