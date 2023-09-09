@@ -4,12 +4,13 @@ import Input from './components/Input'
 import Preview from './components/Preview'
 import Nav from './components/Nav'
 import { useState } from 'react'
-import opentype from 'opentype.js';
+import opentype from 'opentype.js'
 
 function App() {
   const [fontFile, setFontFile] = useState(null)
   const [input, setInput] = useState('')
   const [fontFileName, setFontFileName] = useState(null)
+  const [fontFormat, setFontFormat] = useState('')
   const [customFontClass, setCustomFontClass] = useState('')
   const [error, setError] = useState('')
 
@@ -33,23 +34,29 @@ function App() {
           setFontFile(arrayBuffer)
           setFontFileName(fontName)
 
-          applyFontToElement(arrayBuffer, fontName)
+          // Determine the font format based on the file's type
+          const fontFormat = getFileFormat(file)
+          setFontFormat(fontFormat)
+
+          applyFontToElement(arrayBuffer, fontName, fontFormat)
+
         } catch (error) {
           console.error(error)
           setError('Cannot parse font file')
         }
       }
 
-      reader.readAsArrayBuffer(file);
+      reader.readAsArrayBuffer(file)
   }
 
-  const applyFontToElement = (fontData, fontName) => {
+  const applyFontToElement = (fontData, fontName, fontFormat) => {
 
     if (!fontData) {
       console.error('Font data is missing.')
       return
     }
-  
+
+    // Encode font data as Base64
     const base64FontData = btoa(
       String.fromCharCode.apply(null, new Uint8Array(fontData))
     )
@@ -59,11 +66,25 @@ function App() {
       return
     }
 
+    // Define the format string based on the provided font format
+    let formatString = ''
+    
+    if (fontFormat === 'otf') {
+      formatString = 'opentype'
+    } else if (fontFormat === 'ttf') {
+      formatString = 'truetype'
+    } else if (fontFormat === 'woff') {
+      formatString = 'woff'
+    } else {
+      console.error('Unsupported font format:', fontFormat)
+      return
+    }
+
     const styleElement = document.createElement('style')
     styleElement.innerHTML = `
       @font-face {
         font-family: "${fontName}";
-        src: url('data:font/opentype;base64,${base64FontData}') format('opentype');
+        src: url('data:font/${fontFormat};base64,${base64FontData}') format('${formatString}');
       }
       
       .custom-font {
@@ -73,18 +94,34 @@ function App() {
 
     document.head.appendChild(styleElement)
     setCustomFontClass('custom-font')
-  };
+}
+
+  // Determine the font format based on the file type
+  const getFileFormat = (file) => {
+    const fileName = file.name
+    const fileExtension = fileName.split('.').pop().toLowerCase()
+
+    const formatMapping = {
+      ttf: 'ttf',
+      otf: 'otf',
+      woff: 'woff',
+    }
+
+    const fontFormat = formatMapping[fileExtension]
+
+    return fontFormat
+  }
 
   return (
     <div className="App">
       <Nav />
       <div className="container">
         <Preview input={input} fontFileName={fontFileName} customFontClass={customFontClass} />
-        <Uploader handleFile={handleFile} fontFileName={fontFileName} error={error} />
+        <Uploader handleFile={handleFile} fontFileName={fontFileName} error={error} fontFormat={fontFormat} />
         <Input handleInput={handleInput} />
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

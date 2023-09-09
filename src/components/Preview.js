@@ -53,7 +53,7 @@ const Preview = ({ input, customFontClass }) => {
             <div className="output">
                 <div id="outputText" className={fontClass}>{input}</div>
                 <div className="toggler">
-                    <p>Preview font</p>
+                    <p className="switch-label">Preview font</p>
                     <div className="switch">
                         <label className="switch">
                             <input type="checkbox"  onChange={handleChecked} checked={checked} />
@@ -61,11 +61,13 @@ const Preview = ({ input, customFontClass }) => {
                         </label>
                     </div>
                 </div>
-                <span className="format-btn">
-                    <button onClick={handleBold} style={{fontWeight: 'bold'}}>Bold</button>
-                    <button onClick={handlelight} style={{fontWeight: 'light'}}>Light</button>
-                    <button onClick={handleItalic} style={{fontStyle: 'italic'}}>Italic</button>
-                </span>
+                {/* 
+                    <span className="format-btn">
+                        <button onClick={handleBold} style={{fontWeight: 'bold'}}>Bold</button>
+                        <button onClick={handlelight} style={{fontWeight: 'light'}}>Light</button>
+                        <button onClick={handleItalic} style={{fontStyle: 'italic'}}>Italic</button>
+                    </span>
+                */}
             </div>
         </div>
     );

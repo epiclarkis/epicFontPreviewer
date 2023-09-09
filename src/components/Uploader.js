@@ -1,11 +1,15 @@
-const Uploader = ({ handleFile, fontFileName, error }) => {
+const Uploader = ({ handleFile, fontFileName, error, fontFormat }) => {
 
     return (
         <div className="uploader">
-            <span className="upload-label">Click to select a file: </span>
-            <input type="file" accept=".woff, .ttf, .otf" onChange={handleFile} />
-            {fontFileName && <p>Font name: {fontFileName}</p>}
-            {error && <p className="error">Error: {error}</p>}
+            <input className="upload-btn" type="file" accept=".woff, .ttf, .otf" onChange={handleFile} />
+            {fontFileName && !error && (
+                <p>
+                    Name: <span style={{color: "#347eff"}}>{fontFileName} </span>
+                    Format: <span style={{color: "#347eff"}}>{fontFormat.toUpperCase()}</span>
+                </p>
+            )}
+            {error && <p className="error">Error: {error}.</p>}
         </div>
     );
 }

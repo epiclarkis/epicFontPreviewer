@@ -42,8 +42,10 @@ body {
     margin-top: 15px;
 }
 
-.upload-label {
-  font-weight: 700;
+.upload-btn {
+  background-color: #e2e2e2;
+  width: 25%;
+  padding: 10px;
 }
 
 .error {
@@ -51,9 +53,20 @@ body {
 }
 
 .input textarea {
+  box-sizing: border-box;
+  max-width: 80%;
   border: none;
   padding: 15px;
   outline: none;
+}
+
+.input p,
+.input small {
+  padding: 0 25px;
+}
+
+.input small {
+  padding-bottom: 25px;
 }
 
 #outputText {
@@ -89,7 +102,7 @@ body {
   display: block;
   width: 60px;
   height: 34px;
-  margin-bottom: 15px;
+  top: 25%;
 }
 
   /* Hide default HTML checkbox */
@@ -150,11 +163,9 @@ input:checked + .slider:before {
 .toggler {
   margin-top: 15px;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
   .toggler p {
     margin-right: 15px;
-    margin-top: 6.5px;
   }
