@@ -56,7 +56,7 @@ const Preview = ({ input, customFontClass }) => {
                     <p className="switch-label">Preview font</p>
                     <div className="switch">
                         <label className="switch">
-                            <input type="checkbox"  onChange={handleChecked} checked={checked} />
+                            <input tabIndex={3} aria-checked="false" name="switch" type="checkbox"  onChange={handleChecked} checked={checked} />
                             <span className="slider round"></span>
                         </label>
                     </div>

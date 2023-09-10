@@ -2,7 +2,7 @@ const Uploader = ({ handleFile, fontFileName, error, fontFormat }) => {
 
     return (
         <div className="uploader">
-            <input className="upload-btn" type="file" accept=".woff, .ttf, .otf" onChange={handleFile} />
+            <input tabIndex={1} name="file-upload-btn" className="upload-btn" type="file" accept=".woff, .ttf, .otf" onChange={handleFile} />
             {fontFileName && !error && (
                 <p>
                     Name: <span style={{color: "#347eff"}}>{fontFileName} </span>
